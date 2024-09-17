@@ -13,5 +13,3 @@ fetchTest()
   <RouterView />
   <!-- <TabsView></TabsView> -->
 </template>
-
-<style scoped></style>

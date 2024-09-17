@@ -1,4 +1,5 @@
-import './assets/main.css'
+// 项目初始的默认样式在这里
+// import './assets/main.css'
 
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
@@ -14,5 +15,13 @@ const app = createApp(App)
 
 app.use(createPinia())
 app.use(router)
+
+// 设计稿的fontsize
+const rootValue = 16
+// 设计稿的屏幕宽度
+const rootWidth = 390
+// 用户屏幕宽度
+const deviceWidth = document.documentElement.clientWidth
+document.documentElement.style.fontSize = (deviceWidth * rootValue) / rootWidth + 'px'
 
 app.mount('#app')
