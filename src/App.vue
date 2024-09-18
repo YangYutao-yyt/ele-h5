@@ -14,7 +14,7 @@ fetchTest()
   <!-- <TabsView></TabsView> -->
 </template>
 
-<style scoped>
+<style>
 /* 引入normalize.css */
 @import 'normalize.css';
 

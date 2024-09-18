@@ -1,10 +1,25 @@
 <script setup lang="ts">
+import { ref } from 'vue'
 import type { ISearchRecomment } from '@/types'
+import OpSearch from '@/Cpmponents/OpSearch.vue'
 // 声明传入的搜索推荐
 interface IProps {
   recomments: ISearchRecomment[]
 }
 defineProps<IProps>()
+
+const searchValue = ref('test')
+
+// 定义事件
+const onSearch = (v?: string | number) => {
+  console.log('====search', v)
+}
+const onCancel = () => {
+  console.log('====cancel')
+}
+const onClear = () => {
+  console.log('====clear')
+}
 </script>
 
 <template>
@@ -17,16 +32,21 @@ defineProps<IProps>()
       <img class="comments-icon" src="@/assets/imgs/index_page/comments.png" />
     </div>
     <!-- 搜索栏 -->
-    <VanSearch
+    <OpSearch
+      show-action
+      v-model="searchValue"
       shape="round"
       background="linear-gradient(to right, rgb(53, 200, 250), rgb(31, 175, 243))"
       placeholder="世界茶饮 35减2"
+      @search="onSearch"
+      @cancel="onCancel"
+      @clear="onClear"
     >
       <!-- 搜索按钮 -->
-      <template #right-icon>
+      <!-- <template #right-icon>
         <div>搜索</div>
-      </template>
-    </VanSearch>
+      </template> -->
+    </OpSearch>
     <!-- 搜索推荐 -->
     <div class="search-recommend">
       <div v-for="v in recomments" :key="v.value" class="tag">{{ v.label }}</div>
@@ -52,8 +72,8 @@ defineProps<IProps>()
     font-weight: bold;
 
     .location-icon {
-      width: 24px;
-      height: 24px;
+      width: 20px;
+      height: 20px;
     }
 
     .location {
