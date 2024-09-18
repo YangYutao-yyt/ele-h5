@@ -1,6 +1,4 @@
 <script setup lang="ts">
-// 引入底部导航栏组件
-import { Tabbar, TabbarItem } from 'vant'
 import { ref, watch } from 'vue'
 
 //引入路由的内容组件渲染的地方
@@ -25,11 +23,11 @@ watch(active, (nv) => {
 <template>
   <!-- 不同路由具体内容的渲染 -->
   <RouterView />
-  <Tabbar v-model="active">
-    <TabbarItem name="home" icon="home-o">首页</TabbarItem>
-    <TabbarItem name="order" icon="bars">订单</TabbarItem>
-    <TabbarItem name="me" icon="contact">我的</TabbarItem>
-  </Tabbar>
+  <VanTabbar v-model="active">
+    <VanTabbarItem name="home" icon="home-o">首页</VanTabbarItem>
+    <VanTabbarItem name="order" icon="bars">订单</VanTabbarItem>
+    <VanTabbarItem name="me" icon="contact">我的</VanTabbarItem>
+  </VanTabbar>
 </template>
 
 <style scoped>

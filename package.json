@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "axios": "^1.7.7",
+    "normalize.css": "^8.0.1",
     "pinia": "^2.1.7",
     "reset-css": "^5.0.2",
     "vant": "^4.9.6",
@@ -42,9 +43,11 @@
     "postcss": "^8.4.47",
     "postcss-pxtorem": "^6.1.0",
     "prettier": "^3.2.5",
+    "sass": "^1.78.0",
     "stylelint": "^16.9.0",
     "stylelint-config-standard": "^36.0.1",
     "typescript": "~5.4.0",
+    "unplugin-vue-components": "^0.27.4",
     "vite": "^5.3.1",
     "vue-tsc": "^2.0.21"
   },

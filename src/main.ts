@@ -1,12 +1,11 @@
-// 项目初始的默认样式在这里
-// import './assets/main.css'
-
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 
 import App from './App.vue'
 //将写好的路由内容挂载到app中
 import router from './router'
+// 全局注册底部导航栏
+import { Tabbar, TabbarItem, Search } from 'vant'
 
 // 常规引入Vant组件样式
 import 'vant/lib/index.css'
@@ -15,6 +14,10 @@ const app = createApp(App)
 
 app.use(createPinia())
 app.use(router)
+
+app.use(Tabbar)
+app.use(TabbarItem)
+app.use(Search)
 
 // 设计稿的fontsize
 const rootValue = 16
