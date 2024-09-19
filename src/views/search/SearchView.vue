@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import type { ISearchResult } from '@/types'
 import OpSearch from '@/Cpmponents/OpSearch.vue'
-import { ref, computed } from 'vue'
+import { ref, computed, watch } from 'vue'
 import { fetchSearchData } from '@/api/search'
 import { useToggle } from '@/use/useToggle'
+import { useDebounce } from '@/use/useDebounce'
 
 interface IEmits {
   (e: 'cancel'): void
@@ -53,16 +54,14 @@ const onTagClick = (v: string) => {
   onSearch(v)
 }
 
-// watch(
-//   searchValue,
-//   useDebounce((nv) => {
-//     if (!nv) {
-//       searchResult.value = []
-//       return
-//     }
-//     onSearch(nv as string)
-//   }, 1000)
-// )
+const debounceValue = useDebounce(searchValue, 1000)
+watch(debounceValue, (nv) => {
+  if (!nv) {
+    searchResult.value = []
+    return
+  }
+  onSearch(nv as string)
+})
 </script>
 
 <template>
