@@ -52,6 +52,17 @@ const onTagClick = (v: string) => {
   searchValue.value = v
   onSearch(v)
 }
+
+// watch(
+//   searchValue,
+//   useDebounce((nv) => {
+//     if (!nv) {
+//       searchResult.value = []
+//       return
+//     }
+//     onSearch(nv as string)
+//   }, 1000)
+// )
 </script>
 
 <template>
