@@ -21,8 +21,22 @@ const [isSearchViewShown, toggleSearchView] = useToggle(false)
 
 <template>
   <div class="home-page">
-    <SearchView v-if="isSearchViewShown" @cancel="toggleSearchView"></SearchView>
+    <!-- vue内置的动画组件,实现切换时的动画效果-->
+    <Transition name="fade">
+      <SearchView v-if="isSearchViewShown" @cancel="toggleSearchView"></SearchView>
+    </Transition>
     <TheTop :recomments="recomments" @searchClick="toggleSearchView" />
   </div>
 </template>
-<style></style>
+<style lang="scss" scoped>
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s ease;
+}
+
+// 最开始的透明度为0
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+</style>
