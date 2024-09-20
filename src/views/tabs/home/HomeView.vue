@@ -3,7 +3,9 @@
 import TheTop from './component/TheTop.vue'
 import SearchView from '@/views/search/SearchView.vue'
 import { useToggle } from '@/use/useToggle'
-
+import { useAsync } from '@/use/useAsync'
+import { fetchHomePageData } from '@/api/home'
+import type { IHomeInfo } from '@/types'
 // 我们希望搜索推荐的文案是从这个组件传入的
 const recomments = [
   {
@@ -17,6 +19,8 @@ const recomments = [
 ]
 // 使用useToggle来实现搜索页展示的切换
 const [isSearchViewShown, toggleSearchView] = useToggle(false)
+
+const { data, pending } = useAsync(fetchHomePageData, {} as IHomeInfo)
 </script>
 
 <template>
@@ -26,6 +30,8 @@ const [isSearchViewShown, toggleSearchView] = useToggle(false)
       <SearchView v-if="isSearchViewShown" @cancel="toggleSearchView"></SearchView>
     </Transition>
     <TheTop :recomments="recomments" @searchClick="toggleSearchView" />
+    {{ pending }}
+    {{ data }}
   </div>
 </template>
 <style lang="scss" scoped>
