@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { ISearchResult } from '@/types'
-import OpSearch from '@/Cpmponents/OpSearch.vue'
+import OpSearch from '@/Components/OpSearch.vue'
 import { ref, computed, watch } from 'vue'
 import { fetchSearchData } from '@/api/search'
 import { useToggle } from '@/use/useToggle'

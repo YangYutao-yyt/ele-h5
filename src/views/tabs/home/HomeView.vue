@@ -1,11 +1,14 @@
 <!-- 这个是首页的组件 -->
 <script setup lang="ts">
+// 这种引用都是直引用vue组件
 import TheTop from './component/TheTop.vue'
 import SearchView from '@/views/search/SearchView.vue'
+// 这种引用都是export function
 import { useToggle } from '@/use/useToggle'
 import { useAsync } from '@/use/useAsync'
 import { fetchHomePageData } from '@/api/home'
 import type { IHomeInfo } from '@/types'
+import OpLoadingView from '@/Components/OpLoadingView.vue'
 // 我们希望搜索推荐的文案是从这个组件传入的
 const recomments = [
   {
@@ -30,8 +33,12 @@ const { data, pending } = useAsync(fetchHomePageData, {} as IHomeInfo)
       <SearchView v-if="isSearchViewShown" @cancel="toggleSearchView"></SearchView>
     </Transition>
     <TheTop :recomments="recomments" @searchClick="toggleSearchView" />
-    {{ pending }}
-    {{ data }}
+    <!-- 加载的骨架 -->
+    <OpLoadingView :loading="pending" type="skeleton">
+      <div>
+        {{ data }}
+      </div>
+    </OpLoadingView>
   </div>
 </template>
 <style lang="scss" scoped>

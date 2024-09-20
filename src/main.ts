@@ -5,7 +5,7 @@ import App from './App.vue'
 //将写好的路由内容挂载到app中
 import router from './router'
 // 全局注册底部导航栏
-import { Tabbar, TabbarItem, Search, Icon } from 'vant'
+import { Tabbar, TabbarItem, Search, Icon, Loading, Skeleton } from 'vant'
 
 // 常规引入Vant组件样式
 import 'vant/lib/index.css'
@@ -19,6 +19,8 @@ app.use(Tabbar)
 app.use(TabbarItem)
 app.use(Search)
 app.use(Icon)
+app.use(Loading)
+app.use(Skeleton)
 
 // 设计稿的fontsize
 const rootValue = 16
