@@ -45,3 +45,13 @@ export interface ICountdown {
   time: number
   goods: IGood
 }
+//  imgUrl: '/imgs/index_page/count-down-p.png',
+// name: '腊鸡腿菜饭 + 卤香干 + 冰红茶',
+// price: 19.8,
+// oldPrice: 28.9,
+export interface IGood {
+  imgUrl: string
+  name: string
+  price: number
+  oldPrice: number
+}

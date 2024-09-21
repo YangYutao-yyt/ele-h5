@@ -11,18 +11,8 @@ import { fetchHomePageData } from '@/api/home'
 import type { ICountdown, IHomeInfo } from '@/types'
 import OpLoadingView from '@/Components/OpLoadingView.vue'
 import ScrollBar from './component/ScrollBar.vue'
-// 我们希望搜索推荐的文案是从这个组件传入的
-// const recomments = [
-//   {
-//     value: 1,
-//     label: '牛腩'
-//   },
-//   {
-//     value: 2,
-//     label: '色拉'
-//   }
-// ]
-// 使用useToggle来实现搜索页展示的切换
+import CountDown from './component/CountDown.vue'
+
 const [isSearchViewShown, toggleSearchView] = useToggle(false)
 
 const { data, pending } = useAsync(fetchHomePageData, {
@@ -41,14 +31,21 @@ const { data, pending } = useAsync(fetchHomePageData, {
     <Transition name="fade">
       <SearchView v-if="isSearchViewShown" @cancel="toggleSearchView"></SearchView>
     </Transition>
+    <!-- 顶部搜索栏 -->
     <TheTop :recomments="data.searchRecomments" @searchClick="toggleSearchView" />
     <!-- 加载的骨架 -->
     <OpLoadingView :loading="pending" type="skeleton">
       <div class="home-page__banner">
         <img v-for="v in data.banner" :key="v.imgUrl" :src="v.imgUrl" />
       </div>
+      <!-- Grid网格布局 -->
       <TheTransformer :data="data.transformer" />
+      <!-- 轮播图 -->
       <ScrollBar :data="data.scrollBarInfoList" />
+      <div class="home-page__activity">
+        <!-- 倒计时 -->
+        <CountDown :data="data.countdown" />
+      </div>
     </OpLoadingView>
   </div>
 </template>
@@ -78,6 +75,7 @@ const { data, pending } = useAsync(fetchHomePageData, {
 
   &__activity {
     display: flex;
+    // 平均分
     justify-content: space-between;
     align-items: center;
     margin: 10px;
