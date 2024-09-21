@@ -64,7 +64,6 @@
       "prettier --write"
     ],
     "*.{scss,css}": [
-      "stylelint --fix",
       "prettier --write"
     ],
     "*.md": [

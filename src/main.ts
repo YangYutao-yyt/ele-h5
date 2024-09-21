@@ -10,6 +10,8 @@ import { Tabbar, TabbarItem, Search, Icon, Loading, Skeleton } from 'vant'
 // 常规引入Vant组件样式
 import 'vant/lib/index.css'
 
+import './assets/common.scss'
+
 const app = createApp(App)
 
 app.use(createPinia())

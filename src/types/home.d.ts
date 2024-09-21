@@ -5,7 +5,7 @@ export interface ISearchRecomment {
   value: number
   label: string
 }
-// 搜索结果的类型
+
 export interface ISearchResultList {
   list: ISearchResult[]
 }
@@ -16,21 +16,31 @@ export interface ISearchResult {
   resultCount: number
 }
 
-//fetchHomePageData的数据类型
 export interface IHomeInfo {
-  banner: IBanner
+  banner: IBanner[]
   searchRecomments: ISearchRecomment[]
   transformer: ITransformer[]
+  scrollBarInfoList: IScrollBarInfo[]
   countdown: ICountdown
   activities: string[]
 }
+
 export interface IBanner {
   imgUrl: string
 }
+
 export interface ITransformer {
   imgUrl: string
   label: string
 }
+
+export interface IScrollBarInfo {
+  type: string
+  badge: string
+  detail: string
+  btn: string
+}
+
 export interface ICountdown {
   time: number
   goods: IGood

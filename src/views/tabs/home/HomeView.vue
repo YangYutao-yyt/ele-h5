@@ -2,28 +2,37 @@
 <script setup lang="ts">
 // 这种引用都是直引用vue组件
 import TheTop from './component/TheTop.vue'
+import TheTransformer from './component/TheTransformer.vue'
 import SearchView from '@/views/search/SearchView.vue'
 // 这种引用都是export function
 import { useToggle } from '@/use/useToggle'
 import { useAsync } from '@/use/useAsync'
 import { fetchHomePageData } from '@/api/home'
-import type { IHomeInfo } from '@/types'
+import type { ICountdown, IHomeInfo } from '@/types'
 import OpLoadingView from '@/Components/OpLoadingView.vue'
+import ScrollBar from './component/ScrollBar.vue'
 // 我们希望搜索推荐的文案是从这个组件传入的
-const recomments = [
-  {
-    value: 1,
-    label: '牛腩'
-  },
-  {
-    value: 2,
-    label: '色拉'
-  }
-]
+// const recomments = [
+//   {
+//     value: 1,
+//     label: '牛腩'
+//   },
+//   {
+//     value: 2,
+//     label: '色拉'
+//   }
+// ]
 // 使用useToggle来实现搜索页展示的切换
 const [isSearchViewShown, toggleSearchView] = useToggle(false)
 
-const { data, pending } = useAsync(fetchHomePageData, {} as IHomeInfo)
+const { data, pending } = useAsync(fetchHomePageData, {
+  banner: [],
+  searchRecomments: [],
+  transformer: [],
+  scrollBarInfoList: [],
+  countdown: {} as ICountdown,
+  activities: []
+} as IHomeInfo)
 </script>
 
 <template>
@@ -32,12 +41,14 @@ const { data, pending } = useAsync(fetchHomePageData, {} as IHomeInfo)
     <Transition name="fade">
       <SearchView v-if="isSearchViewShown" @cancel="toggleSearchView"></SearchView>
     </Transition>
-    <TheTop :recomments="recomments" @searchClick="toggleSearchView" />
+    <TheTop :recomments="data.searchRecomments" @searchClick="toggleSearchView" />
     <!-- 加载的骨架 -->
     <OpLoadingView :loading="pending" type="skeleton">
-      <div>
-        {{ data }}
+      <div class="home-page__banner">
+        <img v-for="v in data.banner" :key="v.imgUrl" :src="v.imgUrl" />
       </div>
+      <TheTransformer :data="data.transformer" />
+      <ScrollBar :data="data.scrollBarInfoList" />
     </OpLoadingView>
   </div>
 </template>
@@ -51,5 +62,36 @@ const { data, pending } = useAsync(fetchHomePageData, {} as IHomeInfo)
 .fade-enter-from,
 .fade-leave-to {
   opacity: 0;
+}
+
+.home-page {
+  background: var(--op-gray-bg-color);
+  // padding-bottom: 70px;
+
+  &__banner {
+    img {
+      width: 100%;
+      padding-top: 10px;
+      background: white;
+    }
+  }
+
+  &__activity {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 10px;
+
+    &__swipe {
+      border-radius: 8px;
+      width: 180px;
+      height: 170px;
+
+      img {
+        width: 100%;
+        height: 100%;
+      }
+    }
+  }
 }
 </style>
