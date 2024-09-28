@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { ref } from 'vue'
 import type { ISearchRecomment } from '@/types'
 import OpSearch from '@/Components/OpSearch.vue'
 // 声明传入的搜索推荐

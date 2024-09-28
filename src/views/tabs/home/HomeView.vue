@@ -12,6 +12,8 @@ import type { ICountdown, IHomeInfo } from '@/types'
 import OpLoadingView from '@/Components/OpLoadingView.vue'
 import ScrollBar from './component/ScrollBar.vue'
 import CountDown from './component/CountDown.vue'
+import OpSwipe from '@/Components/swipe/OpSwipe'
+import OpSwipeItem from '@/Components/swipe/OpSwipeItem'
 
 const [isSearchViewShown, toggleSearchView] = useToggle(false)
 
@@ -45,6 +47,12 @@ const { data, pending } = useAsync(fetchHomePageData, {
       <div class="home-page__activity">
         <!-- 倒计时 -->
         <CountDown :data="data.countdown" />
+        <!-- 滚动栏 -->
+        <OpSwipe class="home-page__activity__swipe" :autoplay="3000" :loop="true">
+          <OpSwipeItem v-for="v in data.activities" :key="v">
+            <img :src="v" />
+          </OpSwipeItem>
+        </OpSwipe>
       </div>
     </OpLoadingView>
   </div>
@@ -63,7 +71,7 @@ const { data, pending } = useAsync(fetchHomePageData, {
 
 .home-page {
   background: var(--op-gray-bg-color);
-  // padding-bottom: 70px;
+  padding-bottom: 70px;
 
   &__banner {
     img {
