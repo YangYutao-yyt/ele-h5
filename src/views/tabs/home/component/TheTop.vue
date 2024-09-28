@@ -23,18 +23,22 @@ const emits = defineEmits<IEmits>()
       <img class="shopcart-icon" src="@/assets/imgs/index_page/shopcart.png" />
       <img class="comments-icon" src="@/assets/imgs/index_page/comments.png" />
     </div>
-    <!-- 搜索栏 -->
-    <OpSearch
-      shape="round"
-      background="linear-gradient(to right, rgb(53, 200, 250), rgb(31, 175, 243))"
-      placeholder="世界茶饮 35减2"
-      @inputClick="emits('searchClick')"
-    >
-      <!-- 搜索按钮 -->
-      <template #right-icon>
-        <div @click="emits('searchClick')">搜索</div>
-      </template>
-    </OpSearch>
+    <!-- 给搜索栏加上粘性布局 -->
+    <VanSticky>
+      <!-- 搜索栏 -->
+      <OpSearch
+        shape="round"
+        background="linear-gradient(to right, rgb(53, 200, 250), rgb(31, 175, 243))"
+        placeholder="世界茶饮 35减2"
+        @inputClick="emits('searchClick')"
+      >
+        <!-- 搜索按钮 -->
+        <template #right-icon>
+          <div @click="emits('searchClick')">搜索</div>
+        </template>
+      </OpSearch>
+    </VanSticky>
+
     <!-- 搜索推荐 -->
     <div class="search-recommend">
       <div v-for="v in recomments" :key="v.value" class="tag">{{ v.label }}</div>
