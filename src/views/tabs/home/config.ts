@@ -1,11 +1,12 @@
 // home文件里的常量
 import Todo from '@/Components/OpTodo.vue'
+import ShopList from './component/ShopList.vue'
 
 export const HOME_TABS = [
   {
     title: '附近推荐',
     value: 'recommend',
-    component: Todo
+    component: ShopList
   },
   {
     title: '发现好菜',

@@ -86,7 +86,6 @@ const onTabScroll = ({ isFixed }: { isFixed: boolean }) => {
   transition: opacity 0.5s ease;
 }
 
-// 最开始的透明度为0
 .fade-enter-from,
 .fade-leave-to {
   opacity: 0;
@@ -106,7 +105,6 @@ const onTabScroll = ({ isFixed }: { isFixed: boolean }) => {
 
   &__activity {
     display: flex;
-    // 平均分
     justify-content: space-between;
     align-items: center;
     margin: 10px;

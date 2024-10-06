@@ -11,6 +11,7 @@ import { Tabbar, TabbarItem, Search, Icon, Loading, Skeleton, Tabs, Tab, Sticky 
 import 'vant/lib/index.css'
 
 import './assets/common.scss'
+// import './assets/main.css'
 
 const app = createApp(App)
 
