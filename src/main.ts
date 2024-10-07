@@ -21,7 +21,9 @@ import {
   CellGroup,
   Field,
   Button,
-  ActionSheet
+  ActionSheet,
+  Sidebar,
+  SidebarItem
 } from 'vant'
 
 // 常规引入Vant组件样式
@@ -50,6 +52,8 @@ app.use(CellGroup)
 app.use(Field)
 app.use(Button)
 app.use(ActionSheet)
+app.use(Sidebar)
+app.use(SidebarItem)
 app.use(lazyPlugin)
 
 // 设计稿的fontsize
