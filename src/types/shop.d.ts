@@ -29,14 +29,19 @@ export interface IActivity {
 }
 
 export interface IShopDetail extends IShop {
+  // 公告
   announcement: string
   discounts: IDiscount[]
+  // 红包
   redbags: IRedbag[]
 }
 
+// 优惠
 export interface IDiscount {
+  // 不同的类型
   type: number
   label: string
+  // 具体优惠的内容
   content: IDiscountContent[]
 }
 
