@@ -5,6 +5,7 @@ import OpLoadingView from '@/Components/OpLoadingView.vue'
 import { useAsync } from '@/use/useAsync'
 import { fetchGoodsListData } from '@/api/goods'
 import { useRoute } from 'vue-router'
+import GoodsItem from './GoodsItem.vue'
 
 const route = useRoute()
 const { id } = route.params
@@ -30,7 +31,7 @@ const categoryActive = ref(0)
         <template v-for="v in data" :key="v.label">
           <div class="category-name">{{ v.label }}</div>
           <!-- 左侧列表各个类别对应的商品 -->
-          <div v-for="cv in v.goods" :key="cv.id">{{ cv.name }}</div>
+          <GoodsItem v-for="cv in v.goods" :key="cv.id" :data="cv" />
         </template>
       </div>
     </div>
