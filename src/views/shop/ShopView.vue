@@ -4,6 +4,7 @@ import { useRoute } from 'vue-router'
 import { useAsync } from '@/use/useAsync'
 import { fetchShopPageData } from '@/api/shop'
 import OpLoadingView from '@/Components/OpLoadingView.vue'
+import ShopHeader from '@/views/shop/components/ShopHeader.vue'
 
 const route = useRoute()
 const { id } = route.params
@@ -37,7 +38,7 @@ const onClickLeft = () => history.back()
   <div class="shop-page">
     <VanNavBar left-text="返回" left-arrow @click-left="onClickLeft"></VanNavBar>
     <OpLoadingView :loading="pending" type="skeleton">
-      {{ data.shopName }}
+      <ShopHeader :data="data"></ShopHeader>
     </OpLoadingView>
   </div>
 </template>

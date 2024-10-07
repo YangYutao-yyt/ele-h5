@@ -20,7 +20,8 @@ import {
   Form,
   CellGroup,
   Field,
-  Button
+  Button,
+  ActionSheet
 } from 'vant'
 
 // 常规引入Vant组件样式
@@ -48,6 +49,7 @@ app.use(Form)
 app.use(CellGroup)
 app.use(Field)
 app.use(Button)
+app.use(ActionSheet)
 app.use(lazyPlugin)
 
 // 设计稿的fontsize
