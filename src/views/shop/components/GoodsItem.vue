@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { IGood } from '@/types'
 import { useRouter } from 'vue-router'
+import CartControl from './CartControl.vue'
 
 interface IProps {
   data: IGood
@@ -31,10 +32,11 @@ const gotoGoods = () => {
         </div>
         <div class="old">￥{{ data.oldPrice }}</div>
       </div>
+      <!-- 购物车添加和删除的组件 -->
+      <div class="cart-control-wrapper">
+        <CartControl :data="data"></CartControl>
+      </div>
     </div>
-
-    <!-- 购物车添加和删除的组件 -->
-    <div class="cart-control-wrapper">+</div>
   </div>
 </template>
 <style lang="scss" scoped>
