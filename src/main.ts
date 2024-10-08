@@ -23,7 +23,10 @@ import {
   Button,
   ActionSheet,
   Sidebar,
-  SidebarItem
+  SidebarItem,
+  Popup,
+  Checkbox,
+  CheckboxGroup
 } from 'vant'
 
 // 常规引入Vant组件样式
@@ -54,6 +57,9 @@ app.use(Button)
 app.use(ActionSheet)
 app.use(Sidebar)
 app.use(SidebarItem)
+app.use(Popup)
+app.use(Checkbox)
+app.use(CheckboxGroup)
 app.use(lazyPlugin)
 
 // 设计稿的fontsize

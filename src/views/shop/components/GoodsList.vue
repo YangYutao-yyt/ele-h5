@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-import type { IMenu } from '@/types'
+import { ref, watch } from 'vue'
+import type { IMenu, IGood } from '@/types'
 import OpLoadingView from '@/Components/OpLoadingView.vue'
 import { useAsync } from '@/use/useAsync'
 import { fetchGoodsListData } from '@/api/goods'
 import { useRoute } from 'vue-router'
 import GoodsItem from './GoodsItem.vue'
-
+import { useCartStore } from '@/stores/cart'
 const route = useRoute()
 const { id } = route.params
 
@@ -15,6 +15,14 @@ const { data, pending } = useAsync(
   [] as IMenu[]
 )
 
+const { setCartItems } = useCartStore()
+// 初始化购物车
+watch(data, (nv) => {
+  const cartGoods = nv
+    .reduce((p: IGood[], v: IMenu) => [...p, ...v.goods], [])
+    .filter((v) => v.cartCount)
+  setCartItems(cartGoods)
+})
 const categoryActive = ref(0)
 </script>
 
