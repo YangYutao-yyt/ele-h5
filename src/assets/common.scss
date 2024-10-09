@@ -49,4 +49,9 @@
     left: 0;
     right: 0;
   }
+
+  // 禁止页面滚动的样式
+  &-overflow-hidden {
+    overflow: hidden;
+  }
 }
