@@ -7,16 +7,15 @@ import { fetchGoodsListData } from '@/api/goods'
 import { useRoute } from 'vue-router'
 import GoodsItem from './GoodsItem.vue'
 import { useCartStore } from '@/stores/cart'
+import OpScrollView from '@/Components/OpScrollView.vue'
 const route = useRoute()
 const { id } = route.params
-
 const { data, pending } = useAsync(
   () => fetchGoodsListData(id as string).then((v) => v.data),
   [] as IMenu[]
 )
 
 const { setCartItems } = useCartStore()
-// 初始化购物车
 watch(data, (nv) => {
   const cartGoods = nv
     .reduce((p: IGood[], v: IMenu) => [...p, ...v.goods], [])
@@ -24,23 +23,98 @@ watch(data, (nv) => {
   setCartItems(cartGoods)
 })
 const categoryActive = ref(0)
+const cateActiveRef = ref()
+const goodListRefs = ref()
+const listScrollTo = ref({
+  x: 0,
+  y: 0
+})
+
+let isCateChange = false
+const handleCateChange = (v: number) => {
+  isCateChange = true
+  const el = goodListRefs.value[v]
+  listScrollTo.value = {
+    y: -el.offsetTop,
+    x: 0
+  }
+}
+
+const adjustActiveCateTop = (y: number) => {
+  const activedCateRefsHeight = 38
+  // 越界时，将当前目录栏隐藏
+  if (y >= 0) {
+    cateActiveRef.value.style.top = `-${activedCateRefsHeight}px`
+    return
+  }
+  // 计算当前位置是否在调整区域，即每个目录标题上方 38px 的区域
+  const posY = Math.abs(y)
+  for (let i = goodListRefs.value.length - 1; i >= 0; i--) {
+    const el = goodListRefs.value[i]
+    if (el.offsetTop - activedCateRefsHeight <= posY && posY <= el.offsetTop) {
+      const top = el.offsetTop - posY - activedCateRefsHeight
+      cateActiveRef.value.style.top = `${top}px`
+      return
+    }
+  }
+  // 如果都不在，则需要固定目录栏
+  cateActiveRef.value.style.top = '-1px'
+}
+const findActiveCate = (y: number) => {
+  for (let i = goodListRefs.value.length - 1; i >= 0; i--) {
+    const el = goodListRefs.value[i]
+    if (el.offsetTop <= Math.abs(y)) {
+      return i
+    }
+  }
+  return cateActiveRef.value
+}
+const handleGoodListScroll = (pos: { x: number; y: number }) => {
+  // 如果是点击菜单栏引起的右侧栏滚动，则忽略
+  if (isCateChange) {
+    isCateChange = false
+    return
+  }
+  adjustActiveCateTop(pos.y)
+  categoryActive.value = findActiveCate(pos.y)
+}
 </script>
 
 <template>
   <OpLoadingView :loading="pending" type="skeleton">
     <div class="shop-goods-list">
+      <!-- 里面都会套一层OpScrollView滚动 -->
       <!-- 左侧侧边栏 -->
       <!-- v-model记录侧边栏选到了哪个 -->
-      <VanSidebar v-model="categoryActive">
-        <VanSidebarItem v-for="v in data" :key="v.label" :title="v.label"></VanSidebarItem>
+      <VanSidebar v-model="categoryActive" class="sidebar" @change="handleCateChange">
+        <OpScrollView :data="data">
+          <!-- cateRefs可以获取每个的item -->
+          <VanSidebarItem
+            ref="cateRefs"
+            v-for="v in data"
+            :key="v.label"
+            :title="v.label"
+          ></VanSidebarItem>
+        </OpScrollView>
       </VanSidebar>
       <!-- 右侧列表 -->
       <div class="list">
-        <template v-for="v in data" :key="v.label">
-          <div class="category-name">{{ v.label }}</div>
-          <!-- 左侧列表各个类别对应的商品 -->
-          <GoodsItem v-for="cv in v.goods" :key="cv.id" :data="cv" />
-        </template>
+        <div ref="cateActiveRef" class="category-name category-name__fixed">
+          {{ data[categoryActive].label }}
+        </div>
+        <OpScrollView
+          :data="data"
+          :scroll-to="listScrollTo"
+          @scroll="handleGoodListScroll"
+          @scroll-end="handleGoodListScroll"
+        >
+          <template v-for="v in data" :key="v.label">
+            <!-- 每个类别的文字 -->
+            <div class="category-name" ref="goodListRefs">{{ v.label }}</div>
+            <!-- 左侧列表各个类别对应的商品 -->
+            <GoodsItem v-for="cv in v.goods" :key="cv.id" :data="cv" />
+          </template>
+        </OpScrollView>
       </div>
     </div>
   </OpLoadingView>
