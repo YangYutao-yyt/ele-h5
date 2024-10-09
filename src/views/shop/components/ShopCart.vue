@@ -6,12 +6,23 @@ import EmptyCartLogo from '@/assets/imgs/shop_page/shop-cart/shop-cart-o.png'
 import { useToggle } from '@/use/useToggle'
 import { showConfirmDialog } from 'vant'
 import GoodsItem from './GoodsItem.vue'
+import { useTransition } from '@/use/useTransition'
+// 实现跨组件通信
+import { useEventBus } from '@/use/useEventBus'
 
 const store = useCartStore()
 // 配送费
 const packageFee = ref(5)
 const cartLogo = computed(() => (store.total ? CartLogo : EmptyCartLogo))
 const [isCartListShown, toggleCartListShown] = useToggle(false)
+// 跨组件通信的hooks
+const eventBus = useEventBus()
+const { items, start, beforeEnter, enter, afterEnter } = useTransition()
+// 点击按钮，来触发小球，但这是跨组件的，一个是ShopCart.vue一个是CartCrontrol.vue，这里要跨组件
+eventBus.on('cart-add', (el) => {
+  start(el)
+})
+
 // 没有商品时，点不开按钮
 const showCartListPopup = () => {
   if (!store.total) {
@@ -100,6 +111,17 @@ const removeAll = () => {
           <div>预计券后￥{{ store.totalPrice }}</div>
         </div>
         <div v-else class="order-btn order-btn--empty">￥20元起送</div>
+      </div>
+    </div>
+    <!-- 球的动画 -->
+    <div class="shop-cart__ball-container">
+      <div v-for="(v, i) in items" :key="i">
+        <!-- 根据isShown属性，来启动 -->
+        <Transition @beforeEnter="beforeEnter" @enter="enter" @afterEnter="afterEnter">
+          <div v-show="v.isShown" class="ball">
+            <div class="inner"></div>
+          </div>
+        </Transition>
       </div>
     </div>
   </div>
@@ -287,8 +309,10 @@ const removeAll = () => {
       position: fixed;
       bottom: 10px;
       left: 25px;
+      // 纵向动画
       transition: all 0.4s cubic-bezier(0.49, -0.29, 0.75, 0.41);
 
+      // 横向动画
       .inner {
         width: 22px;
         height: 22px;

@@ -2,6 +2,7 @@
 import type { IGood } from '@/types'
 import { computed } from 'vue'
 import { useCartStore } from '@/stores/cart'
+import { useEventBus } from '@/use/useEventBus'
 
 interface IProps {
   data: IGood
@@ -12,11 +13,13 @@ const store = useCartStore()
 
 const cartCount = computed(() => store.cartCountById(props.data.id))
 
+const eventBus = useEventBus()
 const minus = () => {
   store.removeProductFromCart(props.data)
 }
-const add = () => {
+const add = (event: Event) => {
   store.pushProductToCart(props.data)
+  eventBus.emit('cart-add', event.target)
 }
 </script>
 
