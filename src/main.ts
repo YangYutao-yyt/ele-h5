@@ -68,6 +68,7 @@ const rootValue = 16
 const rootWidth = 390
 // 用户屏幕宽度
 const deviceWidth = document.documentElement.clientWidth
+//html的fontSize
 document.documentElement.style.fontSize = (deviceWidth * rootValue) / rootWidth + 'px'
 
 app.mount('#app')
