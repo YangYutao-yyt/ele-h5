@@ -66,7 +66,7 @@ npm run dev
 
 ![image-20250506105855394](README.assets/image-20250506105855394.png)
 
-后端启动进入
+后端地址：https://github.com/YangYutao-yyt/ele-h5-server，后端启动进入
 
 ```bash
 cd ele-h5-server
